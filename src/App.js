@@ -30,6 +30,48 @@ const Button = styled.button`
   }
 `;
 
+const Input = styled.input`
+  width: auto;
+  height: 56px;
+  position: relative;
+  padding: 0px 16px;
+  border: none;
+  border-radius: 4px;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: normal;
+  background-color: #f6f6f6;
+  color: #282828;
+  outline: none;
+  border: 1px solid #e3e3e3;
+  box-shadow: 0px 4px 20px 0px transparent;
+  transition: 0.3s background-color ease-in-out, 0.3s box-shadow ease-in-out, 0.1s padding ease-in-out;
+  -webkit-appearance: none;
+  &:focus {
+    border-color: #1652cc;
+    transition: border-color 0.3s ease-in-out;
+    outline: 0;
+  }
+`
+
+const Textarea = styled.textarea`
+  width: auto;
+  resize: none;
+  padding: 12px 20px;
+  box-sizing: border-box;
+  border: 2px solid #ccc;
+  border-radius: 4px;
+  background-color: #f8f8f8;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: normal;
+  &:focus {
+    border-color: #1652cc;
+    transition: border-color 0.3s ease-in-out;
+    outline: 0;
+  }
+`
+
 function MyPostMethodForm() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -63,19 +105,19 @@ function MyPostMethodForm() {
   return (
     <div className="App">
       <form style={ { display: 'inline-grid', margin: '0', width: '100%'} } onSubmit={handleSubmit}>
-        <input
+        <Input
           style={{ marginBottom: '.4rem' }}
           type="text"
           value={name}
           placeholder="Name"
           onChange={(e) => setName(e.target.value)} />
-        <input
+        <Input
           style={{ marginBottom: '.4rem' }}
           type="email"
           value={email}
           placeholder="Email"
           onChange={(e) => setEmail(e.target.value)} />
-        <input
+        <Input
           style={{ marginBottom: '.4rem' }}
           type="tel"
           pattern="\d*"
@@ -107,7 +149,7 @@ function MyInput() {
   return (
     <div style={{ paddingBottom: '20px', paddingTop: '20px' }}>
       <form onSubmit={send}>
-        <textarea 
+        <Textarea 
           name="content" 
           rows={1} 
           cols={40} 
