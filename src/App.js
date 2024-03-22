@@ -1,4 +1,4 @@
-import React,  { useState } from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 
 const Button = styled.button`
@@ -29,6 +29,65 @@ const Button = styled.button`
     color: rgb(255, 255, 255);
   }
 `;
+
+function MyPostMethodForm() {
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [mobileNumber, setMobileNumber] = useState("");
+  const [message, setMessage] = useState("");
+  
+  let handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      let res = await fetch("https://httpbin.org/post", {
+        method: "POST",
+        body: JSON.stringify({
+          name: name,
+          email: email,
+          mobileNumber: mobileNumber,
+        })
+      })
+      let resJson = await res.json();
+      if (res.status === 200) {
+        setName("");
+        setEmail("");
+        setMobileNumber("");
+        setMessage("User created successfully: \n" + JSON.stringify(resJson.data) );
+      } else {
+        setMessage("Some error occured")
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  return (
+    <div className="App">
+      <form style={ { display: 'inline-grid', margin: '0', width: '100%'} } onSubmit={handleSubmit}>
+        <input
+          style={{ marginBottom: '.4rem' }}
+          type="text"
+          value={name}
+          placeholder="Name"
+          onChange={(e) => setName(e.target.value)} />
+        <input
+          style={{ marginBottom: '.4rem' }}
+          type="email"
+          value={email}
+          placeholder="Email"
+          onChange={(e) => setEmail(e.target.value)} />
+        <input
+          style={{ marginBottom: '.4rem' }}
+          type="tel"
+          pattern="\d*"
+          value={mobileNumber}
+          placeholder="Mobile Number"
+          onChange={(e) => setMobileNumber(e.target.value)} />
+        <Button type="submit" name="create">Create</Button>
+        <div style={{ wordWrap: 'revert-layer', whiteSpace: 'pre-line' }} dangerouslySetInnerHTML={{__html: message }}></div>
+      </form>
+    </div>
+  );
+}
 
 function MyInput() {
   const [content, setContent] = useState('');
@@ -79,6 +138,7 @@ function App() {
       <h1>Hello, React!</h1>
       <MyButton></MyButton>
       <MyInput></MyInput>
+      <MyPostMethodForm></MyPostMethodForm>
     </div>
   );
 }
